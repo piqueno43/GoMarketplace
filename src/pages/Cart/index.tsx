@@ -38,24 +38,30 @@ interface Product {
 const Cart: React.FC = () => {
   const { increment, decrement, products } = useCart();
 
-  function handleIncrement(id: string): void {
-    // TODO
+  function handleIncrement (id: string): void {
+    increment(id);
   }
 
-  function handleDecrement(id: string): void {
-    // TODO
+  function handleDecrement (id: string): void {
+    decrement(id);
   }
 
   const cartTotal = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
+    const total = products.reduce((accumulator, product) => {
+      const productsSubtotal = product.price * product.quantity;
+      return accumulator + productsSubtotal;
+    }, 0);
 
-    return formatValue(0);
+    return formatValue(total);
   }, [products]);
 
   const totalItensInCart = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
+    const total = products.reduce((accumulator, product) => {
+      const productsQuantity = product.quantity;
+      return accumulator + productsQuantity;
+    }, 0);
 
-    return 0;
+    return total;
   }, [products]);
 
   return (
@@ -92,13 +98,13 @@ const Cart: React.FC = () => {
                   testID={`increment-${item.id}`}
                   onPress={() => handleIncrement(item.id)}
                 >
-                  <FeatherIcon name="plus" color="#E83F5B" size={16} />
+                  <FeatherIcon name='plus' color='#E83F5B' size={16} />
                 </ActionButton>
                 <ActionButton
                   testID={`decrement-${item.id}`}
                   onPress={() => handleDecrement(item.id)}
                 >
-                  <FeatherIcon name="minus" color="#E83F5B" size={16} />
+                  <FeatherIcon name='minus' color='#E83F5B' size={16} />
                 </ActionButton>
               </ActionContainer>
             </Product>
@@ -106,7 +112,7 @@ const Cart: React.FC = () => {
         />
       </ProductContainer>
       <TotalProductsContainer>
-        <FeatherIcon name="shopping-cart" color="#fff" size={24} />
+        <FeatherIcon name='shopping-cart' color='#fff' size={24} />
         <TotalProductsText>{`${totalItensInCart} itens`}</TotalProductsText>
         <SubtotalValue>{cartTotal}</SubtotalValue>
       </TotalProductsContainer>

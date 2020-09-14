@@ -34,15 +34,17 @@ const Dashboard: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    async function loadProducts(): Promise<void> {
-      // TODO
+    async function loadProducts (): Promise<void> {
+      const response = await api.get('/products');
+
+      setProducts(response.data);
     }
 
     loadProducts();
   }, []);
 
-  function handleAddToCart(item: Product): void {
-    // TODO
+  function handleAddToCart (item: Product): void {
+    addToCart(item);
   }
 
   return (
@@ -65,7 +67,7 @@ const Dashboard: React.FC = () => {
                   testID={`add-to-cart-${item.id}`}
                   onPress={() => handleAddToCart(item)}
                 >
-                  <FeatherIcon size={20} name="plus" color="#C4C4C4" />
+                  <FeatherIcon color='#c4c4c4' name='plus' size={20} />
                 </ProductButton>
               </PriceContainer>
             </Product>
